@@ -251,7 +251,10 @@ if (is_plugin_page())
 else
 {
 
-    // main app is here
+// main app is here
+
+// we use this so we don't have to keep working out hexdec() on the colours
+$bon_TechnoratiTagging_colourcache = array();
 
 /**
  * Generates the tags bit
@@ -336,28 +339,35 @@ function get_TagsBit()
 
 function bon_technoratiTagging_get_tagbit_color($freq, $max_freq, $min_freq)
 {
+    global $bon_TechnoratiTagging_colourcache;
     $bon_TechnoTaggingOptions = bon_technoratiTaggingLoadOptions();
 
-    $large_R = hexdec(substr($bon_TechnoTaggingOptions['technoTag_largest_colour'], 1, 2));
-    $large_G = hexdec(substr($bon_TechnoTaggingOptions['technoTag_largest_colour'], 3, 2));
-    $large_B = hexdec(substr($bon_TechnoTaggingOptions['technoTag_largest_colour'], 5, 2));
+    if (!isset($bon_TechnoratiTagging_colourcache['large']))
+    {
+        $bon_TechnoratiTagging_colourcache['large']['r'] = hexdec(substr($bon_TechnoTaggingOptions['technoTag_largest_colour'], 1, 2));
+        $bon_TechnoratiTagging_colourcache['large']['g'] = hexdec(substr($bon_TechnoTaggingOptions['technoTag_largest_colour'], 3, 2));
+        $bon_TechnoratiTagging_colourcache['large']['b'] = hexdec(substr($bon_TechnoTaggingOptions['technoTag_largest_colour'], 5, 2));
+    }
 
-    $small_R = hexdec(substr($bon_TechnoTaggingOptions['technoTag_smallest_colour'], 1, 2));
-    $small_G = hexdec(substr($bon_TechnoTaggingOptions['technoTag_smallest_colour'], 3, 2));
-    $small_B = hexdec(substr($bon_TechnoTaggingOptions['technoTag_smallest_colour'], 5, 2));
+    if (!isset($bon_TechnoratiTagging_colourcache['small']))
+    {
+        $bon_TechnoratiTagging_colourcache['small']['r'] = hexdec(substr($bon_TechnoTaggingOptions['technoTag_smallest_colour'], 1, 2));
+        $bon_TechnoratiTagging_colourcache['small']['g'] = hexdec(substr($bon_TechnoTaggingOptions['technoTag_smallest_colour'], 3, 2));
+        $bon_TechnoratiTagging_colourcache['small']['b'] = hexdec(substr($bon_TechnoTaggingOptions['technoTag_smallest_colour'], 5, 2));
+    }
 
     $percentColour = ($freq - $min_freq) / ($max_freq - $min_freq);
 
     // R
-    $colourAsFloat = $percentColour * ($large_R - $small_R) + $small_R;
+    $colourAsFloat = $percentColour * ($bon_TechnoratiTagging_colourcache['large']['r'] - $bon_TechnoratiTagging_colourcache['small']['r']) + $bon_TechnoratiTagging_colourcache['small']['r'];
     $colour_R = ceil($colourAsFloat);
 
     // G
-    $colourAsFloat = $percentColour * ($large_G - $small_G) + $small_G;
+    $colourAsFloat = $percentColour * ($bon_TechnoratiTagging_colourcache['large']['g'] - $bon_TechnoratiTagging_colourcache['small']['g']) + $bon_TechnoratiTagging_colourcache['small']['g'];
     $colour_G = ceil($colourAsFloat);
 
     // B
-    $colourAsFloat = $percentColour * ($large_B - $small_B) + $small_B;
+    $colourAsFloat = $percentColour * ($bon_TechnoratiTagging_colourcache['large']['b'] - $bon_TechnoratiTagging_colourcache['small']['b']) + $bon_TechnoratiTagging_colourcache['small']['b'];
     $colour_B = ceil($colourAsFloat);
 
     return '#' . dechex($colour_R) . dechex($colour_G) . dechex($colour_B);
