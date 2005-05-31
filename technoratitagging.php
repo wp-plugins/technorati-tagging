@@ -6,10 +6,14 @@ Description: Allows the use of Technorati tags in pages and blogs entries.  Allo
 Version: 1.5
 Author: Ben O'Neill
 Author URI: http://boneill.ninjagrapefruit.com/
+*/
 
+/*
 Released under the Creative Commons Attribution-ShareAlike
 license. For more information visit:
 http://creativecommons.org/licenses/by-sa/2.0/
+
+$Id$
 */
 
 if (!function_exists('bon_technoratiTaggingLoadOptions'))
