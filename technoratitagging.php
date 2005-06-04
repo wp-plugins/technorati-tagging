@@ -3,7 +3,7 @@
 Plugin Name: Technorati Tagging
 Plugin URI: http://boneill.ninjagrapefruit.com/wp-tag-plugin/
 Description: Allows the use of Technorati tags in pages and blogs entries.  Allows you to have a tag grid with a list of your tags and often often they're used.
-Version: 1.5
+Version: 1.6
 Author: Ben O'Neill
 Author URI: http://boneill.ninjagrapefruit.com/
 */
