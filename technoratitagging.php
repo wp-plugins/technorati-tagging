@@ -12,8 +12,6 @@ Author URI: http://boneill.ninjagrapefruit.com/
 Released under the Creative Commons Attribution-ShareAlike
 license. For more information visit:
 http://creativecommons.org/licenses/by-sa/2.0/
-
-$Id$
 */
 
 if (!function_exists('bon_technoratiTaggingLoadOptions'))
@@ -97,10 +95,10 @@ if (is_plugin_page())
 
 ?>
 
-	<div class="wrap">
-		<h2>Technorati Tagging Options</h2>
+        <div class="wrap">
+                <h2>Technorati Tagging Options</h2>
 
-		<form method="post">
+                <form method="post">
             <input type="hidden" name="update_techno_settings" value="update" />
 
             <table width="100%" cellspacing="2" cellpadding="5" class="editform"> 
@@ -219,7 +217,7 @@ if (is_plugin_page())
                 </table>
             </fieldset>
 
-		    <p class="submit">
+                    <p class="submit">
                 <input type="submit" name="Submit" value="Update Options &raquo;" />
             </p>
 
@@ -239,7 +237,7 @@ if (is_plugin_page())
                 </table>
             </fieldset>
 
-		    <p class="submit">
+                    <p class="submit">
                 <input type="submit" name="Submit" value="Update Options &raquo;" />
             </p>
         </form>       
@@ -408,13 +406,11 @@ function bon_technoratiTagging($text)
 
     if (count($tagArray) == 0)
     {
-        // no tags
+        // definetely no tags
     }
     else
     {
         $tagFormattedArray = array();
-
-        $text .= $bon_TechnoTaggingOptions['technoTag_prefix'];
 
         foreach ($tagArray as $tag)
         {
@@ -428,9 +424,13 @@ function bon_technoratiTagging($text)
             $tagFormattedArray[] = str_replace("%URL%", $bon_TechnoTaggingOptions['technoTag_link'] . $tagFixed, str_replace("%TAG%", $tag, $bon_TechnoTaggingOptions['technoTag_format']));
         }
 
-        $text .= implode($bon_TechnoTaggingOptions['technoTag_seperator'], $tagFormattedArray);
-
-        $text .= $bon_TechnoTaggingOptions['technoTag_suffix'];
+        if (count($tagFormattedArray) > 0)
+        {
+            // check if there were no tags (spaces can confuse previous check)
+            $text .= $bon_TechnoTaggingOptions['technoTag_prefix'];
+            $text .= implode($bon_TechnoTaggingOptions['technoTag_seperator'], $tagFormattedArray);
+            $text .= $bon_TechnoTaggingOptions['technoTag_suffix'];
+        }
     }
 
     return $text;
