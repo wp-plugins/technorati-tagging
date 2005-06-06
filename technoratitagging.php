@@ -340,6 +340,12 @@ function bon_technoratiTagging_get_tagbit_color($freq, $max_freq, $min_freq)
     global $bon_TechnoratiTagging_colourcache;
     $bon_TechnoTaggingOptions = bon_technoratiTaggingLoadOptions();
 
+    if ($max_freq == $min_freq)
+    {
+        // all tags used with same frequency
+        return $bon_TechnoTaggingOptions['technoTag_largest_colour'];
+    }
+
     if (!isset($bon_TechnoratiTagging_colourcache['large']))
     {
         $bon_TechnoratiTagging_colourcache['large']['r'] = hexdec(substr($bon_TechnoTaggingOptions['technoTag_largest_colour'], 1, 2));
@@ -375,6 +381,12 @@ function bon_technoratiTagging_get_tagbit_color($freq, $max_freq, $min_freq)
 function bon_technoratiTagging_get_tagbit_fontsize($freq, $max_freq, $min_freq)
 {
     $bon_TechnoTaggingOptions = bon_technoratiTaggingLoadOptions();
+
+    if ($max_freq == $min_freq)
+    {
+        // all tags used with same frequency
+        return $bon_TechnoTaggingOptions['technoTag_largest_fontsize'];
+    }
 
     $percentageOfFontsize = ($freq - $min_freq) / ($max_freq - $min_freq);
     $fontsizeAsFloat = $percentageOfFontsize * ($bon_TechnoTaggingOptions['technoTag_largest_fontsize'] - $bon_TechnoTaggingOptions['technoTag_smallest_fontsize']) + $bon_TechnoTaggingOptions['technoTag_smallest_fontsize'];
