@@ -8,7 +8,7 @@ Technorati Tagging allows you to add Techorati <http://www.technorati.com> tags 
 
 1. Put the technoratitagging.php file into your "wp-content/plugins" directory.
 2. Activate the plugin on the plugin screen.
-3. Goto Options -> Permalinks to update the rewrite rules.
+3. Goto Options -> Permalinks to update the rewrite rules (YOU DO NOT NEED TO CHANGE ANYTHING HERE!)
 4. Goto Plugins -> Technorati Tagging and configure the plugin.
 5. Insert <?php get_TagsBit(); ?> into one of your templates (sidebar.php is recommended).
 
