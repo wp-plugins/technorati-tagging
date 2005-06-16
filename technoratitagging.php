@@ -282,6 +282,13 @@ function get_TagsBit()
     }
 
     // load the tags
+    $tagRawData = $wpdb->get_col("SELECT `meta_value` FROM $wpdb->posts LEFT JOIN $wpdb->postmeta ON $wpdb->posts.ID=$wpdb->postmeta.post_id WHERE (`meta_key`='ttaglist' OR `meta_key`='technorati') AND `post_status`='publish'$where ORDER BY `post_date` DESC$limit");
+
+    if (count($tagRawData) == 0)
+    {
+        return;
+    }
+
     $tagData  = implode(",", $wpdb->get_col("SELECT `meta_value` FROM $wpdb->posts LEFT JOIN $wpdb->postmeta ON $wpdb->posts.ID=$wpdb->postmeta.post_id WHERE (`meta_key`='ttaglist' OR `meta_key`='technorati') AND `post_status`='publish'$where ORDER BY `post_date` DESC$limit"));
     $tagArray = preg_split("/[,]+/", $tagData);
 
